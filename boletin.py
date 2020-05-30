@@ -27,7 +27,7 @@ def cargar_matriz_estadisticas(ruta_archivo: str)->list:
     for i in range(0,facultades+1):
         estadisticas.append([0]*(elementos+1))
 
-    i = 0;
+    i = 0
     while len(linea) > 0:
         datos = linea.split(",")
         for j in range(0,elementos+1):
@@ -93,19 +93,48 @@ def cargar_matriz_dobles(ruta_archivo: str)->list:
     
     return dobles
 
-def cargar_puestos_atendidos(puestos:list) -> None:
+def cargar_puestos_atendidos(puestos:list,facultad) -> None:
     """ Ejecuta la opcion de consultar los puestos estudiantes atendidos
     por una facultad en especifico
     """  
-    
-    
-def cargar_puestos_ocupados(puestos:list) -> None:
+    oferentes = 11
+    ocupantes = 12
+    for i in range(0,oferentes +1 ):
+        if (puestos[i][0]==facultad):
+            total = 0
+            for j in range(1,ocupantes+1):
+                total += int(puestos[i][j])
+            return total
+    return -1        
+       
+def cargar_puestos_ocupados(puestos:list,facultad) -> None:
     """ Ejecuta la opcion de consultar los puestos estudiantes ocupados
     por una facultad en especifico
     """ 
+    oferentes = 11
+    for i in range(0,oferentes+1):
+        if (puestos[i][0]==facultad):
+            total = 0
+            
+            for j in range (1,oferentes+1):
+                total+= int(puestos[j][i])
+            return total 
+    return -1 
 def cargar_facultad_mas_servicial(puestos:list) -> None:
     """ Ejecuta la opcion de consultar la facultad mas servicial
     """
+    oferentes = 11
+    ocupantes = 12
+    Mayor = 0
+    for i in range(1,oferentes +1 ):
+        total = 0
+        for j in range(1,ocupantes+1):
+                total += int(puestos[i][j])
+        
+        otras_facultades = total - int(puestos[i][i])
+        porcentaje = (otras_facultades/total)*100
+        print (puestos[i][0]+" " + str(otras_facultades) + "/"+str(total)+" = "+str(porcentaje))        
+    return -1        
 def cargar_hay_facultad_generosa(puestos:list) -> None:
     """ Ejecuta la opcion de consultar si existe una facultad generosa
     para una facultad en especifico
@@ -131,6 +160,8 @@ def cargar_hay_facultad_con_porcentaje_estudiantes(estadisticas:list):
     porcentaje de estudiantes por genero mayor al requerido
     """      
     
-    
-   
-    
+"""print (cargar_puestos_atendidos(cargar_matriz_puestos("matriz_puestos.csv"),"Medicina"))    
+      
+print (cargar_puestos_ocupados(cargar_matriz_puestos("matriz_puestos.csv"),"Ingenieria"))
+"""
+cargar_facultad_mas_servicial(cargar_matriz_puestos("matriz_puestos.csv"))
