@@ -133,28 +133,111 @@ def cargar_facultad_mas_servicial(puestos:list) -> None:
         
         otras_facultades = total - int(puestos[i][i])
         porcentaje = (otras_facultades/total)*100
-        print (puestos[i][0]+" " + str(otras_facultades) + "/"+str(total)+" = "+str(porcentaje))        
-    return -1        
-def cargar_hay_facultad_generosa(puestos:list) -> None:
+        print (puestos[i][0]+" " + str(otras_facultades) + "/"+str(total)+" = "+str(porcentaje))
+        if porcentaje>Mayor:
+            Mayor = porcentaje
+            Nombre = puestos[i][0]
+    Mayor = round(Mayor,2)        
+    return (Nombre,Mayor)        
+def cargar_hay_facultad_generosa(puestos:list,facultad, porcentaje) -> None:
     """ Ejecuta la opcion de consultar si existe una facultad generosa
     para una facultad en especifico
     """
+    oferentes = 11
+  
+    Mayor = 0
+    porcentaje = porcentaje/100   
+    for i in range(0,oferentes + 1 ):
+        if (puestos[i][0]==facultad):
+            Mayor = int(puestos[i][i])*porcentaje
+            total = 0                    
+            for j  in range(1,oferentes + 1):
+                 total += int(puestos[j][i])         
+                 if (int(puestos[j][i])> Mayor and int(puestos[j][i]) != int (puestos[i][i])):
+                     Mayor = int(puestos[j][i])
+                     Nombre = puestos[j][0]
+            if(Mayor == 0):
+                return ("No existe facultad generosa", 0)
+            else:
+                Mayor = (Mayor/total)*100
+                Mayor = round (Mayor,2)
+                return (Nombre,Mayor)
 def cargar_calcular_autocubrimiento(puestos:list, estadisticas:list) -> None:
     """ Ejecuta la opcion de calcular el autocubrimiento para todas
     las facultades
     """
+    oferentes = 11
+    auxiliar_estadisticas = estadisticas
+    auxiliar_estadisticas[0].append("autocubrimiento")    
+    for i in range (1,oferentes+1):
+        ofrecidos = cargar_puestos_atendidos(puestos,puestos[i][0])
+        ocupados = cargar_puestos_ocupados(puestos,puestos[i][0])
+        autocubrimiemto = (ofrecidos/ocupados)*100
+        autocubrimiemto = round(autocubrimiemto,2)
+        auxiliar_estadisticas[i].append(autocubrimiemto)
+    return auxiliar_estadisticas    
+            
 def cargar_doble_mas_comun(dobles:list) -> None: 
     """ Ejecuta la opcion de consultar el doble programa mas comun
     """
-def cargar_dobles_de_un_programa(dobles:list) -> None:
+    facultades_x = 35
+    facultades_y = 35
+    Mayor_doble = 0
+    Nombre_1 = ""
+    Nombre_2 = ""
+    for i in  range (1,facultades_y+1):
+        Mayor = 0 
+        for j in range(1,facultades_x+1):
+            if int(Mayor) < int(dobles[i][j]):
+                    Mayor = dobles[i][j]
+                    Indice = j
+        Mayor = int(Mayor) + int (dobles[Indice][i])
+        if Mayor > Mayor_doble:
+           Mayor_doble = Mayor
+           Nombre_1 = dobles[i][0]
+           Nombre_2 = dobles[0][Indice]
+    cadena = Nombre_1 + "-"+ Nombre_2        
+    return (cadena,Mayor_doble)               
+        
+def cargar_dobles_de_un_programa(dobles:list,programa) -> None:
     """ Ejecuta la opcion de consultar todos los dobles programas
     de una facultad de su interes
-    """    
+    """
+    
+    facultades_x = 35
+    facultades_y = 35
+    dicionario = list()
+    for i in range (1,facultades_y +1 ):
+        if dobles[i][0] == programa:
+            for j in range(1,facultades_x + 1 ):
+                if not dobles[0][j] == programa:
+                    lib = {dobles[0][j]:dobles[i][j]}
+                    dicionario.append(lib)
+    return dicionario                
 def cargar_estadisticas_pga(estadisticas:list):
     """ Ejecuta la opcion de consultar la facultad con mayor pga, con
     menor pga y la que ocupa la mediana
     """    
-    
+    facultades = 11
+   
+    Mayor = 0
+    Menor =  101
+    Igual = 0
+    Nombre_Menor = ""
+    Nombre_Mayor = ""
+    Nombre_Igual = ""
+    PGA_promedio = 0
+    for i in range (1,facultades+1):
+        if float (estadisticas[i][6]) > Mayor:
+            Mayor = float (estadisticas[i][6])
+            Nombre_Mayor = estadisticas[i][0]
+        if float (estadisticas[i][6]) < Menor:
+            Menor = float (estadisticas[i][6])
+            Nombre_Menor = estadisticas[i][0]
+        if float (estadisticas[i][6]) == PGA_promedio:
+            Igual = float(estadisticas[i][6])
+            Nombre_Igual = estadisticas[i][0]
+    print (Nombre_Mayor +" " + str(Mayor)+" "+Nombre_Menor+" "+ str(Menor)+" "+Nombre_Igual+" "+str(Igual)  )        
 def cargar_hay_facultad_con_porcentaje_estudiantes(estadisticas:list):
     """ Ejecuta la opcion de consultar si existe una facultad con un 
     porcentaje de estudiantes por genero mayor al requerido
@@ -163,5 +246,9 @@ def cargar_hay_facultad_con_porcentaje_estudiantes(estadisticas:list):
 """print (cargar_puestos_atendidos(cargar_matriz_puestos("matriz_puestos.csv"),"Medicina"))    
       
 print (cargar_puestos_ocupados(cargar_matriz_puestos("matriz_puestos.csv"),"Ingenieria"))
-"""
-cargar_facultad_mas_servicial(cargar_matriz_puestos("matriz_puestos.csv"))
+print(cargar_facultad_mas_servicial(cargar_matriz_puestos("matriz_puestos.csv"))) 
+print (cargar_hay_facultad_generosa(cargar_matriz_puestos("matriz_puestos.csv"),"Medicina",5))
+print (cargar_calcular_autocubrimiento(cargar_matriz_puestos("matriz_puestos.csv"),cargar_matriz_estadisticas("estadisticas_facultades.csv") ))
+print(cargar_doble_mas_comun(cargar_matriz_dobles("matriz_dobles.csv")))
+print(cargar_dobles_de_un_programa(cargar_matriz_dobles("matriz_dobles.csv"),"Geociencias"))"""
+cargar_estadisticas_pga(cargar_matriz_estadisticas("estadisticas_facultades.csv"))
