@@ -70,6 +70,12 @@ def ejecutar_cargar_matriz_dobles() -> list:
     """
     dobles = list()
     archivo = input("Por favor ingrese el nombre del archivo CSV con la matriz de dobles programas: ")
+    dobles = be.cargar_matriz_dobles(archivo)
+    if len(dobles) == 0:
+        print("El archivo seleccionado no es valido. No se pudo cargar la matriz de puestos estudiante")
+    else:
+        print("Se cargo la matriz de puestos estudiante")
+    return dobles
 
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el mensaje que indique al usuario si

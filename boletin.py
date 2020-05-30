@@ -55,7 +55,7 @@ def cargar_matriz_puestos(ruta_archivo: str)->list:
     for i in range(0,oferentes+1):
         puestos.append([0] * (ocupantes+1))
 
-    i = 0;
+    i = 0
     while len(linea) > 0:
         datos = linea.split(",")
         for j in range(0,ocupantes+1):
@@ -82,7 +82,7 @@ def cargar_matriz_dobles(ruta_archivo: str)->list:
     for i in range(0,facultades_x+1):
         dobles.append([0] * (facultades_y+1))
 
-    i = 0;
+    i = 0
     while len(linea) > 0:
         datos = linea.split(",")
         for j in range(0,facultades_y +1):
