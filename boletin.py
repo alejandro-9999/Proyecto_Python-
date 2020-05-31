@@ -227,11 +227,10 @@ def cargar_estadisticas_pga(estadisticas:list):
     Nombre_Menor = ""
     Nombre_Mayor = ""
     Nombre_Igual = "No se encontro"
-    PGA_mediana = list()
-    PGA_mediana =estadisticas[:][6].copy()
-    PGA_mediana = PGA_mediana.sort()  
+    PGA_mediana =float (estadisticas[7][6])
+     
     print(PGA_mediana)
-    mediana = round (float(PGA_mediana[5]),2)
+    mediana = round (PGA_mediana,2)
     print(mediana)
     for i in range (1,facultades+1):
         if float (estadisticas[i][6]) > Mayor:
