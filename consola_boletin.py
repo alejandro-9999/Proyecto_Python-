@@ -87,7 +87,8 @@ def ejecutar_puestos_atendidos(puestos:list) -> None:
     por una facultad en especifico
     """   
     facultad = input("Ingrese la facultad de su interes: ")
-    
+    resultado = be.cargar_puestos_atendidos(puestos,facultad)
+    print(resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado
 
@@ -97,7 +98,8 @@ def ejecutar_puestos_ocupados(puestos:list) -> None:
     por una facultad en especifico
     """   
     facultad = input("Ingrese la facultad de su interes: ")
-    
+    resultado = be.cargar_puestos_ocupados(puestos,facultad)
+    print(resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado
 
@@ -105,7 +107,8 @@ def ejecutar_puestos_ocupados(puestos:list) -> None:
 def ejecutar_facultad_mas_servicial(puestos:list) -> None:
     """ Ejecuta la opcion de consultar la facultad mas servicial
     """
-   
+    resultado = be.cargar_facultad_mas_servicial(puestos)
+    print(resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado
   
@@ -117,7 +120,8 @@ def ejecutar_hay_facultad_generosa(puestos:list) -> None:
     
     facultad = input("Ingrese la facultad de su interes: ")
     porcentaje = float(input("Ingrese el porcentaje de su interes: "))
-    
+    resultado = be.cargar_hay_facultad_generosa(puestos,facultad,porcentaje)
+    print(resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado
  
@@ -125,7 +129,8 @@ def ejecutar_calcular_autocubrimiento(puestos:list, estadisticas:list) -> None:
     """ Ejecuta la opcion de calcular el autocubrimiento para todas
     las facultades
     """
-    
+    resultado = be.cargar_calcular_autocubrimiento(puestos,estadisticas)
+    print (resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado
     #Le sugerimos solo imprimir la informacion de ultima columna de la 
@@ -135,7 +140,8 @@ def ejecutar_calcular_autocubrimiento(puestos:list, estadisticas:list) -> None:
 def ejecutar_doble_mas_comun(dobles:list) -> None: 
     """ Ejecuta la opcion de consultar el doble programa mas comun
     """
-    
+    resultado = be.cargar_doble_mas_comun(dobles)
+    print(resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado
 
@@ -145,7 +151,8 @@ def ejecutar_dobles_de_un_programa(dobles:list) -> None:
     de una facultad de su interes
     """    
     programa = input("Ingrese el programa de su interes: ")
-    
+    resultado = be.cargar_dobles_de_un_programa(dobles,programa)
+    print(resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado
 
@@ -154,7 +161,9 @@ def ejecutar_estadisticas_pga(estadisticas:list):
     """ Ejecuta la opcion de consultar la facultad con mayor pga, con
     menor pga y la que ocupa la mediana
     """    
-     
+    resultado = be.cargar_estadisticas_pga(estadisticas)
+    print ("listo")
+    print(resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado
 
@@ -165,7 +174,8 @@ def ejecutar_hay_facultad_con_porcentaje_estudiantes(estadisticas:list):
     """      
     genero = input("Ingrese el genero de su interes (m o f): ")
     porcentaje = float(input("Ingrese el porcentaje de su interes: "))
-    
+    resultado = be.cargar_hay_facultad_con_porcentaje_estudiantes(estadisticas,genero,porcentaje)
+    print(resultado)
     #TODO: complete el codigo haciendo el llamado a la funcion del modulo que
     #implementa este requerimiento e imprimiendo por pantalla el resultado     
 

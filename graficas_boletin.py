@@ -40,11 +40,13 @@ def ejecutar_cargar_matriz_dobles() -> list:
     #TODO llame a la funcion que usted mismo implemento para cargar la matriz de dobles programas
     #Guarde el retorno en una variable llamada dobles
 
+  
+    dobles = be.cargar_matriz_dobles(archivo)
     if len(dobles) == 0:
-        print("El archivo seleccionado no es valido. No se pudo cargar la matriz de dobles programas")
+        print("El archivo seleccionado no es valido. No se pudo cargar la matriz de puestos estudiante")
     else:
-        print("Se cargo la matriz de las dobles programas")
-    return dobles 
+        print("Se cargo la matriz de puestos estudiante")
+    return dobles
 
 def ejecutar_cargar_matriz_estadisticas() -> list:
     """Solicita al usuario que ingrese el nombre de un archivo CSV con los datos de
@@ -85,7 +87,8 @@ def graf_1(dobles:list) -> None:
     programas mas comunes de un programa dado
     """
     programa = input('Ingrese el programa a consultar: ')
-    dc = {}
+    dc = be.cargar_dobles_de_un_programa(dobles,programa)
+    
 
     #TODO llame a la funcion 7 que usted mismo implemento (la que retorna todos los 
     #programas dobles de un programa dado)
@@ -93,8 +96,11 @@ def graf_1(dobles:list) -> None:
     
     if len(dc)>0:
         #En primer lugar convertimos el diccionario a DataFrame de Pandas
+        
+        
         df = pd.DataFrame(dc,index=['Estudiantes'])
         df = df.transpose()
+       
         #Ahora lo filtramos para que solo nos queden los 5 de mayor numero
         df = df.sort_values(by='Estudiantes',ascending=False)
         df = df.head(5)
@@ -121,7 +127,7 @@ def graf_2(puestos:list,estadisticas:list)->None:
     """En esta funcion se utiliza la columna calculada de autocubrimiento
     de cada facultad, para construir un histograma que lo represente.
     """
-    m = []
+    m = be.cargar_calcular_autocubrimiento(puestos,estadisticas).copy()
     #TODO llame a la funcion 5 que usted miso implementó (la que añade la columna de porcentaje de autocubrimiento)
     #Guarde el retorno en una variable llamada m 
     
@@ -154,10 +160,10 @@ def graf_3(estadisticas:list)->None:
     """En esta funcion se utilizan las estadisticas del PGA de las facultades
     para representar la distribucion de los mismos.
     """
-    l=[]
+    l= be.cargar_estadisticas_pga(estadisticas)
     #TODO llame a la funcion 8 que usted mismo implementó (la que obtiene las estadisticas del PGA)
     #Guarde el retorno en una variable llamada l
-    
+    print(l)
     if len(l)>0:
         #Primero extraemos todos los demas PGAs, pues los utilizaremos
         #para la graficas
@@ -222,6 +228,7 @@ def graf_4(estadisticas:list)->None:
         #La grafica de las facultades se guarda en un archivo png
         plt.savefig('graficas/profesores.png',bbox_inches='tight')
         print("La grafica de poblacion de profesores se ha guardado en la carpeta de \"graficas\"")
+        
     else:
         print("No se ha cargado la matriz")
         

@@ -125,6 +125,7 @@ def cargar_facultad_mas_servicial(puestos:list) -> None:
     """
     oferentes = 11
     ocupantes = 12
+    Nombre = ""
     Mayor = 0
     for i in range(1,oferentes +1 ):
         total = 0
@@ -144,7 +145,7 @@ def cargar_hay_facultad_generosa(puestos:list,facultad, porcentaje) -> None:
     para una facultad en especifico
     """
     oferentes = 11
-  
+    Nombre = "" 
     Mayor = 0
     porcentaje = porcentaje/100   
     for i in range(0,oferentes + 1 ):
@@ -174,7 +175,7 @@ def cargar_calcular_autocubrimiento(puestos:list, estadisticas:list) -> None:
         ocupados = cargar_puestos_ocupados(puestos,puestos[i][0])
         autocubrimiemto = (ofrecidos/ocupados)*100
         autocubrimiemto = round(autocubrimiemto,2)
-        auxiliar_estadisticas[i].append(autocubrimiemto)
+        auxiliar_estadisticas[i].append(float(autocubrimiemto))
     return auxiliar_estadisticas    
             
 def cargar_doble_mas_comun(dobles:list) -> None: 
@@ -206,13 +207,13 @@ def cargar_dobles_de_un_programa(dobles:list,programa) -> None:
     
     facultades_x = 35
     facultades_y = 35
-    dicionario = list()
+    dicionario = {}
     for i in range (1,facultades_y +1 ):
         if dobles[i][0] == programa:
             for j in range(1,facultades_x + 1 ):
                 if not dobles[0][j] == programa:
-                    lib = {dobles[0][j]:dobles[i][j]}
-                    dicionario.append(lib)
+                    lib = {dobles[0][j]:float(dobles[i][j])}
+                    dicionario.update(lib)
     return dicionario                
 def cargar_estadisticas_pga(estadisticas:list):
     """ Ejecuta la opcion de consultar la facultad con mayor pga, con
@@ -225,8 +226,13 @@ def cargar_estadisticas_pga(estadisticas:list):
     Igual = 0
     Nombre_Menor = ""
     Nombre_Mayor = ""
-    Nombre_Igual = ""
-    PGA_promedio = 0
+    Nombre_Igual = "No se encontro"
+    PGA_mediana = list()
+    PGA_mediana =estadisticas[:][6].copy()
+    PGA_mediana = PGA_mediana.sort()  
+    print(PGA_mediana)
+    mediana = round (float(PGA_mediana[5]),2)
+    print(mediana)
     for i in range (1,facultades+1):
         if float (estadisticas[i][6]) > Mayor:
             Mayor = float (estadisticas[i][6])
@@ -234,11 +240,31 @@ def cargar_estadisticas_pga(estadisticas:list):
         if float (estadisticas[i][6]) < Menor:
             Menor = float (estadisticas[i][6])
             Nombre_Menor = estadisticas[i][0]
-        if float (estadisticas[i][6]) == PGA_promedio:
+        if float (estadisticas[i][6]) == mediana:
             Igual = float(estadisticas[i][6])
             Nombre_Igual = estadisticas[i][0]
-    print (Nombre_Mayor +" " + str(Mayor)+" "+Nombre_Menor+" "+ str(Menor)+" "+Nombre_Igual+" "+str(Igual)  )        
-def cargar_hay_facultad_con_porcentaje_estudiantes(estadisticas:list):
+            
+    dicionario = list()
+    dicionario.append((Nombre_Mayor,Mayor))   
+    dicionario.append((Nombre_Menor,Menor))    
+    dicionario.append((Nombre_Igual,Igual))  
+    return dicionario        
+
+def cargar_hay_facultad_con_porcentaje_estudiantes(estadisticas:list,sexo,porcentaje):
+    facultades = 11
+    if (sexo == "m" or sexo == "hombre"  ):
+        indice_sexo = 3
+    elif(sexo == "f" or sexo == "mujer"):
+        indice_sexo = 4
+    for i in range (1,facultades +1 ):
+        total = float (estadisticas[i][3]) + float (estadisticas[i][4])
+        
+        porcentaje_estudiantes = (float(estadisticas[i][indice_sexo])/total)*100
+        porcentaje_estudiantes = round(porcentaje_estudiantes,2)
+        if (porcentaje<porcentaje_estudiantes):
+            return (True,estadisticas[i][0],porcentaje_estudiantes)
+    return (False,0,0)    
+
     """ Ejecuta la opcion de consultar si existe una facultad con un 
     porcentaje de estudiantes por genero mayor al requerido
     """      
@@ -250,5 +276,6 @@ print(cargar_facultad_mas_servicial(cargar_matriz_puestos("matriz_puestos.csv"))
 print (cargar_hay_facultad_generosa(cargar_matriz_puestos("matriz_puestos.csv"),"Medicina",5))
 print (cargar_calcular_autocubrimiento(cargar_matriz_puestos("matriz_puestos.csv"),cargar_matriz_estadisticas("estadisticas_facultades.csv") ))
 print(cargar_doble_mas_comun(cargar_matriz_dobles("matriz_dobles.csv")))
-print(cargar_dobles_de_un_programa(cargar_matriz_dobles("matriz_dobles.csv"),"Geociencias"))"""
-cargar_estadisticas_pga(cargar_matriz_estadisticas("estadisticas_facultades.csv"))
+print(cargar_dobles_de_un_programa(cargar_matriz_dobles("matriz_dobles.csv"),"Geociencias"))
+print(cargar_estadisticas_pga(cargar_matriz_estadisticas("estadisticas_facultades.csv")))
+print(cargar_hay_facultad_con_porcentaje_estudiantes(cargar_matriz_estadisticas("estadisticas_facultades.csv"),"f",60))"""
